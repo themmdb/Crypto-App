@@ -1,3 +1,4 @@
+import { MagnifyingGlass } from "react-loader-spinner";
 import chartUp from "../../assets/chart-up.svg";
 import chartDown from "../../assets/chart-down.svg";
 
@@ -6,7 +7,7 @@ function TableCoin({ coins, isLoading }) {
   return (
     <div>
       {isLoading ? (
-        <p>loading</p>
+        <MagnifyingGlass />
       ) : (
         <table>
           <thead>
