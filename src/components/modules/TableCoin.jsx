@@ -6,7 +6,6 @@ import chartDown from "../../assets/chart-down.svg";
 import styles from "./TableCoin.module.css";
 
 function TableCoin({ coins, isLoading }) {
-  console.log(coins);
   return (
     <div>
       {isLoading ? (
@@ -55,7 +54,9 @@ const TableRow = ({
       </td>
       <td>{name}</td>
       <td>${current_price.toLocaleString()}</td>
-      <td className={price_change > 0? styles.success: styles.error}>{price_change.toFixed(2)}%</td>
+      <td className={price_change > 0 ? styles.success : styles.error}>
+        {price_change.toFixed(2)}%
+      </td>
       <td>{total_volume.toLocaleString()}</td>
       <td>
         <img src={price_change > 0 ? chartUp : chartDown} alt={name} />
