@@ -5,11 +5,13 @@ import chartDown from "../../assets/chart-down.svg";
 
 import styles from "./TableCoin.module.css";
 
-function TableCoin({ coins, isLoading }) {
+function TableCoin({ coins, isLoading, currency }) {
   return (
     <div>
       {isLoading ? (
-        <MagnifyingGlass />
+        <span className={styles.loading}>
+          <MagnifyingGlass />
+        </span>
       ) : (
         <table className={styles.table}>
           <thead>
@@ -23,7 +25,7 @@ function TableCoin({ coins, isLoading }) {
           </thead>
           <tbody>
             {coins.map((coin) => (
-              <TableRow coin={coin} key={coin.id} />
+              <TableRow coin={coin} key={coin.id} currency={currency} />
             ))}
           </tbody>
         </table>
@@ -34,16 +36,15 @@ function TableCoin({ coins, isLoading }) {
 
 export default TableCoin;
 
-const TableRow = ({
-  coin: {
+const TableRow = ({ coin, currency }) => {
+  const {
     name,
     image,
     symbol,
     total_volume,
     current_price,
     price_change_percentage_24h: price_change,
-  },
-}) => {
+  } = coin;
   return (
     <tr>
       <td>
@@ -53,7 +54,10 @@ const TableRow = ({
         </div>
       </td>
       <td>{name}</td>
-      <td>${current_price.toLocaleString()}</td>
+      <td>
+        {currency === "usd" && <span>$</span>}
+        {current_price.toLocaleString()}
+      </td>
       <td className={price_change > 0 ? styles.success : styles.error}>
         {price_change.toFixed(2)}%
       </td>
