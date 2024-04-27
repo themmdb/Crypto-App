@@ -1,15 +1,21 @@
 import { useEffect, useState } from "react";
+import { MagnifyingGlass } from "react-loader-spinner";
+
 import { searchCoin } from "../../services/cryptoApi.js";
 
 function Search({ currency, setCurrecy }) {
   const [text, setText] = useState("");
   const [coins, setCoins] = useState([]);
+  const [isLoadoing, setisLoading] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
 
     setCoins([]);
-    if (!text) return;
+    if (!text) {
+      setisLoading(false);
+      return;
+    }
 
     const Search = async () => {
       try {
@@ -19,6 +25,7 @@ function Search({ currency, setCurrecy }) {
         const json = await res.json();
         if (json.coins) {
           setCoins(json.coins);
+          setisLoading(false);
         } else {
           alert(json.status.error_message);
         }
@@ -28,6 +35,7 @@ function Search({ currency, setCurrecy }) {
         }
       }
     };
+    setisLoading(true);
     Search();
 
     return () => controller.abort();
@@ -46,6 +54,7 @@ function Search({ currency, setCurrecy }) {
         <option value="jpy">JPY</option>
       </select>
       <div>
+        {isLoadoing && <MagnifyingGlass width="50px" height="50px" glassColor="#ddf5fd" color="#3874FF" />}
         <ul>
           {coins.map((coin) => (
             <li key={coin.id}>
