@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { MagnifyingGlass } from "react-loader-spinner";
 
+import styles from "../modules/Search.module.css";
+
 import { searchCoin } from "../../services/cryptoApi.js";
 
 function Search({ currency, setCurrecy }) {
@@ -41,7 +43,7 @@ function Search({ currency, setCurrecy }) {
     return () => controller.abort();
   }, [text]);
   return (
-    <div>
+    <div className={styles.searchBox}>
       <input
         type="text"
         placeholder="Search"
@@ -53,8 +55,15 @@ function Search({ currency, setCurrecy }) {
         <option value="eur">EUR</option>
         <option value="jpy">JPY</option>
       </select>
-      <div>
-        {isLoadoing && <MagnifyingGlass width="50px" height="50px" glassColor="#ddf5fd" color="#3874FF" />}
+      <div className={styles.searchResult}>
+        {isLoadoing && (
+          <MagnifyingGlass
+            width="50px"
+            height="50px"
+            glassColor="#ddf5fd"
+            color="#3874FF"
+          />
+        )}
         <ul>
           {coins.map((coin) => (
             <li key={coin.id}>
