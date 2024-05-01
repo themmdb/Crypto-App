@@ -55,24 +55,28 @@ function Search({ currency, setCurrecy }) {
         <option value="eur">EUR</option>
         <option value="jpy">JPY</option>
       </select>
-      <div className={styles.searchResult}>
-        {isLoadoing && (
-          <MagnifyingGlass
-            width="50px"
-            height="50px"
-            glassColor="#ddf5fd"
-            color="#3874FF"
-          />
-        )}
-        <ul>
-          {coins.map((coin) => (
-            <li key={coin.id}>
-              <img src={coin.thumb} alt={coin.name} />
-              <p>{coin.name}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {(!!coins.length || isLoadoing) && (
+        <div className={styles.searchResult}>
+          {isLoadoing && (
+            <span className={styles.magnet}>
+              <MagnifyingGlass
+                width="50px"
+                height="50px"
+                glassColor="#ddf5fd"
+                color="#3874FF"
+              />
+            </span>
+          )}
+          <ul>
+            {coins.map((coin) => (
+              <li key={coin.id}>
+                <img src={coin.thumb} alt={coin.name} />
+                <p>{coin.name}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
