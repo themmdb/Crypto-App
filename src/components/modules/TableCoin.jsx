@@ -12,7 +12,7 @@ function TableCoin({ coins, isLoading, currency, setChart }) {
     <div>
       {isLoading ? (
         <span className={styles.loading}>
-          <MagnifyingGlass />
+          <MagnifyingGlass glassColor="#ddf5fd" color="#3874FF" />
         </span>
       ) : (
         <table className={styles.table}>
@@ -59,11 +59,10 @@ const TableRow = ({ coin, currency, setChart }) => {
       const res = await fetch(marketChart(id));
       const json = await res.json();
       console.log(json);
-      setChart(json);
+      setChart({ ...json, coin });
     } catch (err) {
       setChart(null);
     }
-    setChart(true);
   };
   return (
     <tr>
