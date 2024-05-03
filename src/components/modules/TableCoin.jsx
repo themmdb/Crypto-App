@@ -1,5 +1,7 @@
 import { MagnifyingGlass } from "react-loader-spinner";
 
+import { marketChart } from "../../services/cryptoApi.js";
+
 import chartUp from "../../assets/chart-up.svg";
 import chartDown from "../../assets/chart-down.svg";
 
@@ -43,6 +45,7 @@ export default TableCoin;
 
 const TableRow = ({ coin, currency, setChart }) => {
   const {
+    id,
     name,
     image,
     symbol,
@@ -51,7 +54,15 @@ const TableRow = ({ coin, currency, setChart }) => {
     price_change_percentage_24h: price_change,
   } = coin;
 
-  const showHandler = () => {
+  const showHandler = async () => {
+    try {
+      const res = await fetch(marketChart(id));
+      const json = await res.json();
+      console.log(json);
+      setChart(json);
+    } catch (err) {
+      setChart(null);
+    }
     setChart(true);
   };
   return (
